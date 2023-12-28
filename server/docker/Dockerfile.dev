@@ -1,0 +1,31 @@
+# https://catalog.redhat.com/software/containers/ubi9/python-311
+FROM registry.access.redhat.com/ubi9/python-311:1-41 as builder
+
+ARG PIPENV_VENV_IN_PROJECT=1
+
+USER 0
+
+RUN dnf update -y
+RUN yum -y update-minimal --security --sec-severity=Important --sec-severity=Critical
+
+RUN pip install pipenv==2023.11.15
+
+### install dependencies
+COPY Pipfile            ./Pipfile
+COPY Pipfile.lock       ./Pipfile.lock
+
+RUN pipenv install --system
+
+WORKDIR /opt/app-root/src
+
+COPY src                        /opt/app-root/src/src
+COPY docker/cmds                /opt/app-root/src
+
+ARG user=1001
+
+RUN chown -R ${user}:0          /opt/app-root/src
+
+USER ${user}
+
+CMD ["./start_server.sh"]
+

@@ -4,7 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+flask = "==3.0.0"
 graphene = "==3.3"
+sqlalchemy = "==2.0.23"
+graphql-server = "==3.0.0b7"
+graphene-sqlalchemy = "==3.0.0rc1"
+graphql-relay = "== 3.2.0"
+promise = "== 2.3"
 
 [dev-packages]
 pytest = "==7.4.3"

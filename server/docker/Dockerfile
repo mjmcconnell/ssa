@@ -43,3 +43,5 @@ COPY docker/cmds                            /opt/app-root
 RUN chown -R ${user}:0 ./
 
 USER ${user}
+
+CMD ["./start_server.sh"]
